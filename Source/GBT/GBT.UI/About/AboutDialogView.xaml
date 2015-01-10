@@ -1,0 +1,13 @@
+﻿<Window x:Class="GBT.UI.About.AboutDialogView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="About" SizeToContent="WidthAndHeight">
+
+    <StackPanel Orientation="Vertical" Margin="10">
+		<TextBlock Text="{Binding Title}" Margin="0,0,0,10" FontWeight="Bold" />
+		<TextBlock Text="{Binding Version, StringFormat='Version {0}'}" />
+		<TextBlock Text="{Binding Copyright}" />
+		<Button Content="Ok" Command="{Binding OkCommand}" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,10,0,0" Padding="10,0,10,0" IsDefault="True"/>
+	</StackPanel>
+	
+</Window>

@@ -1,0 +1,139 @@
+﻿<Window x:Class="GBT.UI.Main.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:dlgs="clr-namespace:MvvmDialogs.Behaviors;assembly=MvvmDialogs"
+		xmlns:cmd ="http://www.galasoft.ch/mvvmlight"		
+		xmlns:conv="clr-namespace:GBT.UI.Converters"
+		xmlns:Patterns="clr-namespace:GBT.UI.Patterns"  
+		xmlns:entity="clr-namespace:GBT.Domain.Entities;assembly=GBT.Domain"  
+        Title="{Binding Path=CurrentLanguage[Caption], Source={StaticResource Localizations}}"
+		Height="600" Width="800"
+		xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+		x:Name="_this" WindowState="Normal" TextOptions.TextFormattingMode="Display"
+		dlgs:DialogBehavior.DialogViewModels="{Binding Dialogs}"		
+		DataContext="{Binding Path=Main, Source={StaticResource ServiceLocator}}">
+	
+	<Window.Resources>
+		<conv:EqualityConverter x:Key="EqualityConverter" />
+		<conv:StripConverter x:Key="StripConverter" />
+		
+	</Window.Resources>
+
+	<i:Interaction.Triggers>
+		<i:EventTrigger EventName="Loaded">
+			<i:InvokeCommandAction Command="{Binding ElementName=_this, Path=DataContext.LoadedCommand}" />
+		</i:EventTrigger>
+		<i:EventTrigger EventName="Closing">
+			<cmd:EventToCommand Command="{Binding ClosingCommand}" PassEventArgsToCommand="True" />
+		</i:EventTrigger>
+		<i:EventTrigger EventName="Closed">
+			<i:InvokeCommandAction Command="{Binding ElementName=_this, Path=DataContext.ClosedCommand}" />
+		</i:EventTrigger>
+	</i:Interaction.Triggers>
+
+	<Window.InputBindings>
+		<KeyBinding Key="F4" Modifiers="Alt" Command="{Binding ExitCommand}" />
+	</Window.InputBindings>
+
+	<DockPanel>
+
+		<Menu DockPanel.Dock="Top">
+			<MenuItem Header="{Binding Path=CurrentLanguage[File], Source={StaticResource Localizations}}">
+				<MenuItem Header="{Binding Path=CurrentLanguage[New], Source={StaticResource Localizations}}" Command="{Binding NewCommand}" />
+				<MenuItem Header="{Binding Path=CurrentLanguage[Open], Source={StaticResource Localizations}}" Command="{Binding OpenCommand}" />
+				<MenuItem Header="{Binding Path=CurrentLanguage[Close], Source={StaticResource Localizations}}" Command="{Binding CloseCommand}" />
+				<Separator />
+				<MenuItem Header="{Binding Path=CurrentLanguage[Save], Source={StaticResource Localizations}}" Command="{Binding SaveCommand}" />
+				<MenuItem Header="{Binding Path=CurrentLanguage[SaveAs], Source={StaticResource Localizations}}" Command="{Binding SaveAsCommand}" />
+				<Separator />
+				<MenuItem Header="{Binding Path=CurrentLanguage[Exit], Source={StaticResource Localizations}}" Command="{Binding ExitCommand}" />
+			</MenuItem>
+
+			<MenuItem Header="{Binding Path=CurrentLanguage[Edit], Source={StaticResource Localizations}}">
+				<MenuItem Header="{Binding Path=CurrentLanguage[Cut], Source={StaticResource Localizations}}" Command="{Binding CutCommand}" />
+				<MenuItem Header="{Binding Path=CurrentLanguage[Copy], Source={StaticResource Localizations}}" Command="{Binding CopyCommand}" />
+				<MenuItem Header="{Binding Path=CurrentLanguage[Paste], Source={StaticResource Localizations}}" Command="{Binding PasteCommand}" />
+			</MenuItem>
+
+			<MenuItem Header="{Binding Path=CurrentLanguage[Options], Source={StaticResource Localizations}}">				
+			</MenuItem>
+
+			<MenuItem Header="{Binding Path=CurrentLanguage[Language], Source={StaticResource Localizations}}" ItemsSource="{Binding Path=Languages, Source={StaticResource Localizations}}" DisplayMemberPath="Description">
+				<MenuItem.ItemContainerStyle>
+					<Style TargetType="{x:Type MenuItem}">
+						<Setter Property="IsCheckable" Value="True" />
+						<Setter Property="Command" Value="{Binding DataContext.SelectLanguageCommand, ElementName=_this}" />
+						<Setter Property="CommandParameter" Value="{Binding}" />
+						<Setter Property="IsChecked">
+							<Setter.Value>
+								<MultiBinding Converter="{StaticResource EqualityConverter}" Mode="OneWay">
+									<Binding Path="." Mode="OneWay" />
+									<Binding Source="{StaticResource Localizations}" Path="CurrentLanguage" Mode="OneWay" />
+								</MultiBinding>
+							</Setter.Value>
+						</Setter>
+					</Style>
+				</MenuItem.ItemContainerStyle>
+			</MenuItem>
+			
+			<MenuItem Header="{Binding Path=CurrentLanguage[Help], Source={StaticResource Localizations}}">
+				<MenuItem Header="{Binding Path=CurrentLanguage[About], Source={StaticResource Localizations}}" Command="{Binding AboutCommand}" />
+			</MenuItem>
+		</Menu>
+
+		<ToolBarTray DockPanel.Dock="Top">
+			<ToolBar>
+				<Button Content="{Binding Path=CurrentLanguage[New], Source={StaticResource Localizations}, Converter={StaticResource StripConverter}, ConverterParameter='_'}" Command="{Binding NewCommand}" />
+				<Button Content="{Binding Path=CurrentLanguage[Open], Source={StaticResource Localizations}, Converter={StaticResource StripConverter}, ConverterParameter='_'}" Command="{Binding OpenCommand}" />
+				<Button Content="{Binding Path=CurrentLanguage[Save], Source={StaticResource Localizations}, Converter={StaticResource StripConverter}, ConverterParameter='_'}" Command="{Binding SaveCommand}" />
+			</ToolBar>
+			<ToolBar>
+				<Button Content="{Binding Path=CurrentLanguage[Cut], Source={StaticResource Localizations}, Converter={StaticResource StripConverter}, ConverterParameter='_'}" Command="{Binding CutCommand}" />
+				<Button Content="{Binding Path=CurrentLanguage[Copy], Source={StaticResource Localizations}, Converter={StaticResource StripConverter}, ConverterParameter='_'}" Command="{Binding CopyCommand}" />
+				<Button Content="{Binding Path=CurrentLanguage[Paste], Source={StaticResource Localizations}, Converter={StaticResource StripConverter}, ConverterParameter='_'}" Command="{Binding PasteCommand}" />
+			</ToolBar>
+		</ToolBarTray>
+
+		<StatusBar DockPanel.Dock="Bottom">
+			<TextBlock Text="{Binding Status}" />
+		</StatusBar>
+
+		<Grid>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="100*" />
+				<ColumnDefinition Width="5"/>
+				<ColumnDefinition Width="300*" />
+			</Grid.ColumnDefinitions>
+
+			<TreeView Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemsSource="{Binding CurrentSong}" />
+			
+			<GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch"/>
+
+			<TabControl Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+				
+				<TabItem Header="{Binding Path=CurrentLanguage[Instruments], Source={StaticResource Localizations}}">
+					<Grid />
+				</TabItem>
+				
+				<TabItem Header="{Binding Path=CurrentLanguage[Patterns], Source={StaticResource Localizations}}">
+					<Grid>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="100"/>
+							<RowDefinition Height="5"/>
+							<RowDefinition Height="100*"/>
+						</Grid.RowDefinitions>
+						<GridSplitter Grid.Row="1" Height="5" VerticalAlignment="Stretch"/>
+						<Patterns:PatternEditControl Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" DataContext="{Binding CurrentPattern}" />
+					</Grid>
+				</TabItem>
+				
+				<TabItem Header="{Binding Path=CurrentLanguage[Tracks], Source={StaticResource Localizations}}" >
+					<Grid />
+				</TabItem>
+
+			</TabControl >
+			
+		</Grid>
+	</DockPanel>
+
+</Window>

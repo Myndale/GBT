@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Strings Description="Français" Culture="fr">
+
+	<String Key="File" Value="_Dossier" />
+	<String Key="New" Value="_Nouveau" />
+	<String Key="Open" Value="_Ouvrir" />
+	<String Key="Close" Value="_Fermer" />
+	<String Key="Save" Value="_Enregistrer" />
+	<String Key="SaveAs" Value="Enregistrer _sous" />
+
+	<String Key="Edit" Value="_Modifier" />
+	<String Key="Cut" Value="_Cut" />
+	<String Key="Copy" Value="C_opie" />
+	<String Key="Paste" Value="Co_ller" />
+
+	<String Key="Options" Value="_Options de" />
+	<String Key="Settings" Value="_Paramètres" />
+
+	<String Key="Language" Value="_Language" />
+
+	<String Key="Help" Value="_Aider" />
+	<String Key="About" Value="_Sur" />
+
+	<String Key="Instruments" Value="Instruments" />
+	<String Key="Patterns" Value="Patterns" />
+	<String Key="Tracks" Value="Rails" />
+
+</Strings>

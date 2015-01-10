@@ -1,0 +1,103 @@
+﻿<UserControl 
+	x:Class="GBT.UI.Patterns.PatternEditControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+	xmlns:vm="clr-namespace:GBT.UI.EntityViewModels"
+	xmlns:local="clr-namespace:GBT.UI.Patterns"
+	xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+	xmlns:cmd="http://www.galasoft.ch/mvvmlight"
+	xmlns:behaviors="clr-namespace:GBT.UI.Behaviors"
+	x:Name="_this"
+    mc:Ignorable="d" 
+	SnapsToDevicePixels="True"
+	Focusable="True"
+	FontFamily="Courier New" FontSize="14"			 
+    d:DesignHeight="300" d:DesignWidth="300">
+
+	<i:Interaction.Triggers>
+		<!--<i:EventTrigger EventName="MouseDown">
+			<cmd:EventToCommand Command="{Binding ClickCommand}" PassEventArgsToCommand="True" />
+		</i:EventTrigger>-->
+		<i:EventTrigger EventName="PreviewKeyDown">
+			<cmd:EventToCommand Command="{Binding KeyDownCommand}" PassEventArgsToCommand="True" />
+		</i:EventTrigger>
+	</i:Interaction.Triggers>
+
+	<UserControl.Resources>
+
+		<DataTemplate DataType="{x:Type vm:NoteViewModel}">
+			<local:PatternCellControl />
+		</DataTemplate>
+		
+
+		<ItemsPanelTemplate x:Key="PatternPanel">
+			<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" />
+		</ItemsPanelTemplate>
+
+		<!--
+		<Style x:Key="RowStyle">
+			<Setter Property="Control.HorizontalAlignment" Value="Center" />
+		</Style>
+		-->
+
+		<DataTemplate DataType="{x:Type vm:PatternRowViewModel}">
+			<StackPanel Orientation="Horizontal" >
+				<Button Margin="10,0,10,0" Focusable="False">
+					<TextBlock Text="{Binding RowNum, StringFormat='{}{0}:'}" Width="50" TextAlignment="Right"/>
+				</Button>
+				<ItemsControl ItemsSource="{Binding Channels}"
+							  ItemsPanel="{StaticResource PatternPanel}"
+							  HorizontalAlignment="Center"
+							  HorizontalContentAlignment="Center"
+							  Focusable="False"
+							  />
+
+				<!--
+							  ItemContainerStyle="{StaticResource RowStyle}"-->
+
+			</StackPanel>
+		</DataTemplate>
+
+		<Style x:Key="ListBoxItemStyle1" TargetType="{x:Type ListBoxItem}">
+			<Setter Property="FocusVisualStyle" Value="{x:Null}" />
+		</Style>
+
+	</UserControl.Resources>
+
+	<!--<ItemsControl VirtualizingStackPanel.IsVirtualizing="True" ScrollViewer.CanContentScroll="True" ItemsSource="{Binding Rows}" >
+
+		<i:Interaction.Behaviors>
+			<behaviors:ScrollToBehavior SelectedPath="SelectedItem" />
+		</i:Interaction.Behaviors>
+
+		<ItemsControl.ItemsPanel>
+			<ItemsPanelTemplate>
+				<VirtualizingStackPanel>
+				</VirtualizingStackPanel>
+			</ItemsPanelTemplate>
+		</ItemsControl.ItemsPanel>
+		<ItemsControl.Template>
+			<ControlTemplate>
+				<Border BorderThickness="{TemplateBinding Border.BorderThickness}"
+						Padding="{TemplateBinding Control.Padding}"
+						BorderBrush="{TemplateBinding Border.BorderBrush}"
+						Background="{TemplateBinding Panel.Background}"
+						SnapsToDevicePixels="True">
+					<ScrollViewer Padding="{TemplateBinding Control.Padding}" Focusable="False">
+						<ItemsPresenter SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" />
+					</ScrollViewer>
+				</Border>
+			</ControlTemplate>
+		</ItemsControl.Template>
+	</ItemsControl>-->
+
+	<!--<ListBox ItemsSource="{Binding Rows}" SelectedItem="{Binding SelectedItem}" IsSynchronizedWithCurrentItem="True" />-->
+	<ListBox ItemsSource="{Binding Rows}"
+			 SelectedItem="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged}"
+			 ItemContainerStyle="{DynamicResource ListBoxItemStyle1}"
+			 IsSynchronizedWithCurrentItem="True"
+			 />
+
+</UserControl>

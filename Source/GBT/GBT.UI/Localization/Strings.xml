@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Strings Description="English" Culture="en">
+
+	<String Key="Caption" Value="Gamebuino Tracker" />
+
+	<String Key="File" Value="_File" />
+	<String Key="New" Value="_New" />
+	<String Key="Open" Value="_Open" />
+	<String Key="Close" Value="_Close" />
+	<String Key="Save" Value="_Save" />
+	<String Key="SaveAs" Value="Save _As" />
+
+	<String Key="Edit" Value="_Edit" />
+	<String Key="Cut" Value="_Cut" />
+	<String Key="Copy" Value="C_opy" />
+	<String Key="Paste" Value="_Paste" />
+
+	<String Key="Options" Value="_Options" />
+	<String Key="Settings" Value="_Settings" />
+
+	<String Key="Language" Value="_Language" />
+
+	<String Key="Help" Value="_Help" />
+	<String Key="About" Value="_About" />
+
+	<String Key="Instruments" Value="Instruments" />
+	<String Key="Patterns" Value="Patterns" />
+	<String Key="Tracks" Value="Tracks" />
+
+</Strings>

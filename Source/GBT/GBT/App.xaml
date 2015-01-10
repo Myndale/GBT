@@ -1,0 +1,22 @@
+﻿<Application x:Class="GBT.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:properties="clr-namespace:GBT.Properties"
+			 xmlns:ioc="clr-namespace:GBT.IoC"
+			 StartupUri="pack://application:,,,/GBT.UI;component/Main/MainWindow.xaml" >
+    <Application.Resources>
+
+		<ResourceDictionary>
+			
+			<ioc:NinjectServiceLocator x:Key="ServiceLocator" />
+			<properties:Resources x:Key="Resources" />
+			<properties:Settings x:Key="Settings" />
+
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="pack://application:,,,/GBT.UI;component/InterfaceResources.xaml" />
+				<ResourceDictionary Source="pack://application:,,,/MvvmDialogs;component/DialogResources.xaml" />
+			</ResourceDictionary.MergedDictionaries>
+		</ResourceDictionary>
+		
+	</Application.Resources>
+</Application>
